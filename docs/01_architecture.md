@@ -1,7 +1,7 @@
 # System Architecture
 
 ## Tech Stack
-- **Backend:** Python / FastAPI
+- **Backend:** Python / FastAPI (async — `asyncpg` + async SQLAlchemy)
 - **Database:** PostgreSQL with `pgvector` extension
 - **Frontend:** Next.js (React) / Tailwind CSS
 - **AI/Logic:** Direct LLM API calls (OpenAI / Anthropic) with a thin Python wrapper. LangChain is deferred to a future phase — only to be introduced if AI pipelines become complex enough to warrant the abstraction.
@@ -30,5 +30,35 @@
 | Conflict resolution | Last-write-wins | Good enough for a small trusted group; avoids CRDT/OT complexity |
 | Content format | Markdown in `description` fields | Enables rich text (headings, links, lists) while staying plain text in the DB. Frontend renders with a Markdown editor (e.g. Tiptap, Milkdown). Structured data stays in `properties` JSONB. |
 
-## Project Structure (To Be Updated)
-*(Will be filled in as the codebase is generated.)*
+## Project Structure
+
+```
+network-gm/
+├── docker-compose.yml        # DB (pgvector) + backend services
+├── docs/                     # Spec and architecture documents
+├── frontend/
+│   └── src/app/              # Next.js app router scaffold (UI not yet built)
+└── backend/
+    ├── main.py               # FastAPI app — mounts all routers under /api/v1
+    ├── requirements.txt
+    ├── Dockerfile
+    ├── alembic.ini
+    ├── pytest.ini            # asyncio_mode=auto, session loop scope
+    ├── .env.example          # DATABASE_URL template for local dev
+    ├── alembic/
+    │   ├── env.py            # Async Alembic env
+    │   └── versions/
+    │       └── 001_initial_schema.py   # nodes + edges + pgvector + HNSW index
+    ├── app/
+    │   ├── config.py         # Settings: reads DATABASE_URL from env (required, no default)
+    │   ├── database.py       # Async engine, session factory, get_db dependency
+    │   ├── models/           # SQLAlchemy ORM models (Node, Edge)
+    │   ├── schemas/          # Pydantic v2 request/response schemas
+    │   ├── crud/             # DB query functions (nodes, edges, graph)
+    │   └── routers/          # HTTP route handlers (nodes, edges, tags, graph)
+    └── tests/
+        ├── conftest.py       # Test DB setup, TRUNCATE between tests, get_db override
+        ├── test_nodes.py     # 7 tests: CRUD, campaign scoping, archive, updated_at
+        ├── test_edges.py     # 6 tests: create, cross-campaign 404, direction, delete
+        └── test_graph.py     # 8 tests: empty campaign, archive exclusion, subgraph depth, tags
+```

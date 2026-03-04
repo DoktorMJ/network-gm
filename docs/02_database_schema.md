@@ -91,3 +91,20 @@ CREATE INDEX idx_edges_target ON edges(target_node_id);
 -- HNSW Index for fast vector similarity search
 CREATE INDEX idx_nodes_embedding ON nodes USING hnsw (embedding vector_l2_ops);
 ```
+
+## 4. Implementation Notes
+
+### SQLAlchemy + asyncpg casting gotcha
+When writing raw SQL via SQLAlchemy's `text()`, avoid the PostgreSQL `::uuid` cast syntax — it conflicts with SQLAlchemy's `:param` binding parser. Use `CAST(:param AS uuid)` instead:
+
+```python
+# ❌ Breaks with asyncpg
+text("SELECT * FROM nodes WHERE id = :id::uuid")
+
+# ✅ Works
+text("SELECT * FROM nodes WHERE id = CAST(:id AS uuid)")
+```
+This affects any raw SQL that passes UUID parameters — notably the recursive CTE used in subgraph traversal.
+
+### Tags query
+`SELECT DISTINCT unnest(tags)` must be written as raw SQL. SQLAlchemy ORM's `func.distinct(func.unnest())` generates invalid syntax with the asyncpg dialect.

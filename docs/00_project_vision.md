@@ -6,7 +6,7 @@ A hosted, AI-augmented "World Brain" for a group of Tabletop RPG Game Masters. I
 ## Feature Tracker
 
 ### 1. The Relational Knowledge Graph
-- [Specced] **Node-Based Architecture:** Everything is a node with relationships.
+- [Built] **Node-Based Architecture:** Full CRUD API for nodes and edges, campaign scoping, soft delete, tag filtering, text search, graph + subgraph endpoints. 21 automated tests.
 - [Concept] **Visual Map:** Interactive node-map for factions and characters.
 - [Concept] **Standard Navigation:** Traditional list/folder view fallback.
 
@@ -22,4 +22,6 @@ A hosted, AI-augmented "World Brain" for a group of Tabletop RPG Game Masters. I
 
 ### 4. Immersion & Polish
 - [Concept] **Atmospheric Automation:** Audio/visual triggers tied to nodes.
-- [Concept] **Global Search:** Millisecond "Spotlight" style search.
+- [Built] **Text Search:** Basic `ILIKE` search on node name and description via `?search=` query param.
+- [Concept] **Semantic Search:** Vector similarity search via pgvector (embedding column exists, generation not yet wired).
+- [Concept] **Global Spotlight:** Millisecond cross-type "Spotlight" style search.

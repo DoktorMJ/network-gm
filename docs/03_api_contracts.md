@@ -44,7 +44,7 @@ These endpoints are optimized for rendering the visual map and exploring connect
 ```
 *Note: `properties` and `description` are omitted from graph responses to keep the payload light.*
 
-### 1.2 `GET /campaigns/{campaign_id}/nodes/{id}/subgraph`
+### 1.2 `GET /campaigns/{campaign_id}/graph/nodes/{id}/subgraph`
 **Purpose:** Fetches a specific node and all its immediate connections up to a specific depth. Used for generating AI context windows and focusing the user view.
 
 **Query Parameters:**
@@ -130,22 +130,20 @@ Standard operations for creating, reading, updating, and archiving nodes.
 
 **Response (200 OK):**
 ```json
-{
-  "edges": [
-    {
-      "id": "uuid",
-      "source_node_id": "uuid",
-      "target_node_id": "uuid",
-      "source_node_name": "Thalduin",
-      "target_node_name": "Spiret",
-      "type": "Rules",
-      "weight": 2,
-      "properties": {}
-    }
-  ]
-}
+[
+  {
+    "id": "uuid",
+    "source_node_id": "uuid",
+    "target_node_id": "uuid",
+    "source_node_name": "Thalduin",
+    "target_node_name": "Spiret",
+    "type": "Rules",
+    "weight": 2,
+    "properties": {}
+  }
+]
 ```
-*Note: Includes `source_node_name` and `target_node_name` so the frontend can display edge lists without additional lookups.*
+*Note: Returns a bare array (not wrapped in an object). Includes `source_node_name` and `target_node_name` so the frontend can display edge lists without additional lookups.*
 
 ### 3.2 `POST /campaigns/{campaign_id}/edges`
 **Purpose:** Create a new edge between two nodes.
