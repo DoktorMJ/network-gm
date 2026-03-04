@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+sqlalchemy[asyncio]
+asyncpg
+pgvector
+alembic
+python-dotenv
+google-generativeai
