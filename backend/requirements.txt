@@ -8,3 +8,8 @@ pgvector
 alembic
 python-dotenv
 google-generativeai
+
+# Testing
+pytest
+pytest-asyncio
+httpx
