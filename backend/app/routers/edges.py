@@ -1,4 +1,5 @@
 import uuid
+from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -18,7 +19,7 @@ router = APIRouter()
 async def list_edges_for_node(
     campaign_id: uuid.UUID,
     node_id: uuid.UUID,
-    direction: str = "both",
+    direction: Literal["both", "outgoing", "incoming"] = "both",
     type: str | None = None,
     db: AsyncSession = Depends(get_db),
 ):

@@ -1,15 +1,15 @@
 import uuid
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class NodeCreate(BaseModel):
     name: str
     type: str
     description: str | None = None
-    properties: dict = {}
-    tags: list[str] = []
+    properties: dict = Field(default_factory=dict)
+    tags: list[str] = Field(default_factory=list)
 
 
 class NodeUpdate(BaseModel):

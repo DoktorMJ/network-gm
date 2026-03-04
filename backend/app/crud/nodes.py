@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime, timezone
 
 from sqlalchemy import select, func, text
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -49,6 +50,7 @@ async def create_node(db: AsyncSession, campaign_id: uuid.UUID, data: NodeCreate
 async def update_node(db: AsyncSession, node: Node, data: NodeUpdate) -> Node:
     for field, value in data.model_dump(exclude_unset=True).items():
         setattr(node, field, value)
+    node.updated_at = datetime.now(timezone.utc)
     await db.commit()
     await db.refresh(node)
     return node

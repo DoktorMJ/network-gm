@@ -26,6 +26,9 @@ async def get_full_graph(
     nodes = node_result.all()
     node_ids = {n.id for n in nodes}
 
+    if not node_ids:
+        return {"nodes": [], "edges": []}
+
     edge_q = select(
         Edge.id, Edge.source_node_id, Edge.target_node_id, Edge.type, Edge.weight
     ).where(

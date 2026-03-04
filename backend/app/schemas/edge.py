@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class EdgeCreate(BaseModel):
@@ -9,7 +9,7 @@ class EdgeCreate(BaseModel):
     target_node_id: uuid.UUID
     type: str
     weight: int = 1
-    properties: dict = {}
+    properties: dict = Field(default_factory=dict)
 
 
 class EdgeUpdate(BaseModel):

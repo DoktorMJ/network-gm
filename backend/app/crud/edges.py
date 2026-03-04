@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime, timezone
 
 from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -71,6 +72,7 @@ async def create_edge(db: AsyncSession, data: EdgeCreate) -> Edge:
 async def update_edge(db: AsyncSession, edge: Edge, data: EdgeUpdate) -> Edge:
     for field, value in data.model_dump(exclude_unset=True).items():
         setattr(edge, field, value)
+    edge.updated_at = datetime.now(timezone.utc)
     await db.commit()
     await db.refresh(edge)
     return edge
