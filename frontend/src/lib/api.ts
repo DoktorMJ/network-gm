@@ -44,10 +44,7 @@ export function updateNode(id: string, data: NodeUpdate): Promise<Node> {
 }
 
 export function archiveNode(id: string): Promise<Node> {
-  return apiFetch<Node>(`/nodes/${id}`, {
-    method: "PATCH",
-    body: JSON.stringify({ is_archived: true }),
-  });
+  return apiFetch<Node>(`/nodes/${id}`, { method: "DELETE" });
 }
 
 // --- Edges ---

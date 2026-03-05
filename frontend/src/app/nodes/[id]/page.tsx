@@ -165,7 +165,11 @@ export default function NodeDetailPage({ params }: Props) {
         open={showEdgeForm}
         sourceNodeId={id}
         onClose={() => setShowEdgeForm(false)}
-        onCreated={() => globalMutate([`/nodes/${id}/edges`, "all"])}
+        onCreated={() => {
+          globalMutate([`/nodes/${id}/edges`, "all"]);
+          globalMutate([`/nodes/${id}/edges`, "outgoing"]);
+          globalMutate([`/nodes/${id}/edges`, "incoming"]);
+        }}
       />
     </div>
   );
