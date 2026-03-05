@@ -20,5 +20,8 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Claude Code
+.claude/
+
 # Docker volumes (never commit data)
 pgdata/

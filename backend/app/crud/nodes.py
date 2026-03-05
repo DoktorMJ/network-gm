@@ -63,6 +63,18 @@ async def archive_node(db: AsyncSession, node: Node) -> Node:
     return node
 
 
+async def get_unique_types(db: AsyncSession, campaign_id: uuid.UUID) -> list[str]:
+    result = await db.execute(
+        text(
+            "SELECT DISTINCT type FROM nodes "
+            "WHERE campaign_id = :cid AND is_archived = false "
+            "ORDER BY type"
+        ),
+        {"cid": str(campaign_id)},
+    )
+    return [row[0] for row in result.all()]
+
+
 async def get_unique_tags(db: AsyncSession, campaign_id: uuid.UUID) -> list[str]:
     # Use raw SQL: SELECT DISTINCT unnest(tags) AS tag FROM nodes WHERE ... ORDER BY tag
     result = await db.execute(
