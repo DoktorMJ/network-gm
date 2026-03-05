@@ -7,8 +7,9 @@ A hosted, AI-augmented "World Brain" for a group of Tabletop RPG Game Masters. I
 
 ### 1. The Relational Knowledge Graph
 - [Built] **Node-Based Architecture:** Full CRUD API for nodes and edges, campaign scoping, soft delete, tag filtering, text search, graph + subgraph endpoints. 21 automated tests.
+- [Built] **Browser CRUD UI (Slice 1):** Full node and relationship management from the browser — create, edit, archive nodes; add/remove typed edges with weight; parchment-themed sidebar with dynamic type navigation (types fetched from live data), tag autocomplete, key-value properties editor, loading skeletons, error states.
 - [Concept] **Visual Map:** Interactive node-map for factions and characters.
-- [Concept] **Standard Navigation:** Traditional list/folder view fallback.
+- [Built] **Standard Navigation:** Filterable list view with sidebar type navigation, search, and archived toggle.
 
 ### 2. Intelligence Layer (AI-Augmented)
 - [Concept] **Procedural Content Generation:** Context-aware NPCs, loot, rumors.

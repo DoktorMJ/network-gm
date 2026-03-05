@@ -173,7 +173,7 @@ Standard operations for creating, reading, updating, and archiving nodes.
 ### 3.4 `DELETE /campaigns/{campaign_id}/edges/{id}`
 **Purpose:** Hard delete an edge. Edges don't need soft delete — they can be recreated easily.
 
-## 4. Tags
+## 4. Tags & Types
 
 ### 4.1 `GET /campaigns/{campaign_id}/tags`
 **Purpose:** List all unique tags in use across the campaign. Powers tag autocomplete in the UI.
@@ -184,6 +184,17 @@ Standard operations for creating, reading, updating, and archiving nodes.
   "tags": ["arc-1", "capital", "criminal", "guild", "mage", "magic"]
 }
 ```
+
+### 4.2 `GET /campaigns/{campaign_id}/types`
+**Purpose:** List all unique node types in use across the campaign. Powers the sidebar nav links and the type combobox in node forms. Excludes archived nodes.
+
+**Response (200 OK):**
+```json
+{
+  "tags": ["Event", "Faction", "Location", "NPC"]
+}
+```
+*Note: Uses the same `TagsResponse` schema as `/tags` — the `tags` field name is reused for simplicity. Node types are free-form strings; the frontend merges these with a hardcoded default set (NPC, Location, Event, Faction, Item) so the combobox is useful even on an empty campaign.*
 
 ## 5. The "Lazy DM" AI Endpoints
 
